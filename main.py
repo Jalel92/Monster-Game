@@ -1,12 +1,8 @@
 import os
 from db_init import personnages, monstres
 import random
+from utils import *
 
-
-def afficher_header(texte: str) :
-    print("-"*50)
-    print(texte.center(50))
-    print("-"*50)
 
 def afficher_menu():
     #Effacer le contenu du terminal
@@ -21,12 +17,12 @@ def afficher_menu():
 
 def nouvelle_partie() :
     #Afficher le pseudo 
-    pseudo_joueur = input("Entrez votre pseudo : ")
+    pseudo_joueur = str(input("Entrez votre pseudo : "))
     #Afficher la liste des personnages
     print("Voici la liste des personnages :")
     for i in range(len(personnages)) :
         print(f"{i}. {personnages[i]["name"]} | ❤️  ​PV : {personnages[i]["PV"]} | ⚔️  ​ATK : {personnages[i]["ATK"]} | 🛡️  ​DEF : {personnages[i]["DEF"]}") #ne pas oulblier de rajouter leurs caractéristiques
-    # Récupere les personnages et le nom de l'équipe
+    # Récupere les personnages et vérifie les réponses
     rep1 = int(input("Entrez le numéro du premier personnage : "))
     if rep1 not in (0,1,2,3,4,5,6,7,8,9) :
         raise ValueError("Veuillez entrez un chiffre correct !")
@@ -40,13 +36,12 @@ def nouvelle_partie() :
         raise ValueError("Veuillez entrez un chiffre correct !")
     
     team = [personnages[rep1]["name"],personnages[rep2]["name"],personnages[rep3]["name"]]
+    # Sélection du nom de l'équipe
     print(f"Voici ton équipe ! : {team}")
     nom_team = str(input("Trouve lui un nom ! : "))
     # Choix aléatoire du montre
     monstre = random.choice(monstres)
-    print("-"*50)
-    print(f"{nom_team} affronteront le monstre {monstre['name']} !".center(50))
-    print("-"*50)
+    afficher_header(f"L'équipe {nom_team} affronteront le monstre {monstre['name']} (⚔️  ATK : {monstre['ATK']} | 🛡️  DEF : {monstre['DEF']} | ❤️  PV : {monstre['PV']})")
 
 
 def main() :
